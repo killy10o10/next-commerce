@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   description: 'Your one stop shop built by Quami Killy',
 }
 
+
 export default function RootLayout({
   children,
 }: {
