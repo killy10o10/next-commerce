@@ -5,6 +5,7 @@ import * as z from "zod";
 import {useForm} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 
 import { useStoreModal } from "@/hooks/use-store-modal"
@@ -12,6 +13,7 @@ import { Modal } from "@/components/ui/modal"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -33,13 +35,24 @@ export const StoreModal = () => {
     try {
       setLoading(true);
       const response = await axios.post('/api/stores', values);
-      console.log(response.data);
+      toast.success(`Store Created.`);
     } catch (error) {
-      console.log(error)
+      toast.error("something went wrong😓");
     }
     finally {
       setLoading(false)
     }
+
+    // ALTERNATIVELY YOU COULD USE TOAST PROMISE
+    // toast.promise(
+    //   axios.post("/api/stores", values),
+    //   {
+    //     loading: `Creating ${values.name} Store...`,
+    //     success: () => `${values.name} store successfuly created`,
+    //     error: (err) => `something went wrong: ${err.toString()}`
+    //   }
+    // )
+
   }
 
   return(
