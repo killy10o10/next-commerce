@@ -16,7 +16,7 @@ const MainNav = ({className, ...props}: React.HTMLAttributes<HTMLElement>) => {
     }
   ]
   return (
-    <nav className={cn("flex items-center space-x-4 lg:space-x-6", className)}>
+    <nav className={cn("px-2", className)}>
       {
         routes.map((route) => <Link key={route.href} href={route.href} className={cn("text-sm font-medium transition-colors hover:text-primary", route.active ? "text-black dark:text-white" : "text-muted-foreground")}>{route.label}</Link>)
       }
