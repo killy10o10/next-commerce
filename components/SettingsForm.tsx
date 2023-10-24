@@ -5,6 +5,9 @@ import { Store } from '@prisma/client';
 import { Trash } from 'lucide-react';
 import * as z from 'zod';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useParams, useRouter } from 'next/navigation';
+import axios from 'axios';
 
 import Heading from '@/components/Heading';
 import { Button } from '@/components/ui/button';
@@ -32,6 +35,8 @@ type SettingsFormValue = z.infer<typeof formSchema>;
 const SettingsForm: React.FC<SettingsPageProps> = ({ initialData }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const params = useParams();
+  const router = useRouter();
 
   const form = useForm<SettingsFormValue>({
     resolver: zodResolver(formSchema),
@@ -39,7 +44,16 @@ const SettingsForm: React.FC<SettingsPageProps> = ({ initialData }) => {
   });
 
   const onSubmit = async (data: SettingsFormValue) => {
-    console.log(data);
+    try {
+      setLoading(true);
+      await axios.patch(`/api/stores/${params.storeId}`, data);
+      router.refresh();
+      toast.success('Store updated');
+    } catch (error) {
+      toast.error('Something went wrong');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -50,9 +64,12 @@ const SettingsForm: React.FC<SettingsPageProps> = ({ initialData }) => {
           description='Manage store preferences'
         />
         <Button
+          disabled={loading}
           variant='destructive'
           size='sm'
-          onClick={() => {}}>
+          onClick={() => {
+            setOpen(true);
+          }}>
           <Trash className='h-4 w-4 mr-2' />
           Remove Store
         </Button>
