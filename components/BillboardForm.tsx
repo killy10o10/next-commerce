@@ -24,7 +24,6 @@ import { Input } from '@/components/ui/input';
 import AlertModal from '@/components/modals/alert-modal';
 import { useOrigin } from '@/hooks/use-origin';
 import ImageUpload from '@/components/ui/image-upload';
-import { url } from 'inspector';
 
 const formSchema = z.object({
   label: z.string().min(1),
