@@ -1,30 +1,41 @@
-"use client"
-import { Plus } from "lucide-react"
-import { useParams, useRouter } from "next/navigation"
+'use client';
+import { Plus } from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
 
-import Heading from "@/components/Heading"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
+import Heading from '@/components/Heading';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { BillboardColumn, columns } from '@/components/Colums';
+import { DataTable } from '@/components/ui/data-table';
 
-const BillboardClient = () => {
-  const router = useRouter()
-  const params = useParams()
+interface BillboardClientProps {
+  data: BillboardColumn[];
+}
+
+const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
+  const router = useRouter();
+  const params = useParams();
 
   return (
     <>
-      <div className="flex items-center justify-between">
-       <Heading 
-          title="Billboards (0)"
-          description="Manage billboards for your store"
-        /> 
+      <div className='flex items-center justify-between'>
+        <Heading
+          title={`Billboards (${data.length})`}
+          description='Manage billboards for your store'
+        />
         <Button onClick={() => router.push(`/${params.storeId}/billboards/new`)}>
-          <Plus className="mr-2 h-4 w-4" />
+          <Plus className='mr-2 h-4 w-4' />
           Add New
         </Button>
       </div>
-      <Separator /> 
+      <Separator />
+      <DataTable
+        columns={columns}
+        data={data}
+        searchKey='label'
+      />
     </>
-  )
-}
+  );
+};
 
-export default BillboardClient
+export default BillboardClient;
