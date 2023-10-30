@@ -14,11 +14,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { BillboardColumn } from '@/components/Colums';
+import { BillboardColumn } from '@/components/BillboardColums';
 import AlertModal from '@/components/modals/alert-modal';
+import { CategoryColumn } from './CategoryColumns';
 
 interface CellActionProps {
-  data: BillboardColumn;
+  data: BillboardColumn | CategoryColumn;
+  name: String;
 }
 
 const CellAction: React.FC<CellActionProps> = ({ data }) => {
