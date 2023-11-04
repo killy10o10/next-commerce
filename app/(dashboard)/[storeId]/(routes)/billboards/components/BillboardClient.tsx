@@ -5,7 +5,10 @@ import { useParams, useRouter } from 'next/navigation';
 import Heading from '@/components/Heading';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { BillboardColumn, columns } from '@/components/BillboardColums';
+import {
+  BillboardColumn,
+  columns,
+} from '@/app/(dashboard)/[storeId]/(routes)/billboards/components/BillboardColums';
 import { DataTable } from '@/components/ui/data-table';
 import ApiList from '@/components/ui/api-list';
 

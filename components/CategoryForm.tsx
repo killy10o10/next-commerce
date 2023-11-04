@@ -66,7 +66,7 @@ const CategoryForm: React.FC<CategoryPageProps> = ({ initialData, billboards }) 
       setLoading(true);
       if (initialData) {
         await axios.patch(
-          `/api/${params.storeId}/categories/${params.billboardId}`,
+          `/api/${params.storeId}/categories/${params.categoryId}`,
           data
         );
       } else {
@@ -85,11 +85,11 @@ const CategoryForm: React.FC<CategoryPageProps> = ({ initialData, billboards }) 
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeId}/categories/${params.billboardId}`);
+      await axios.delete(`/api/${params.storeId}/categories/${params.categoryId}`);
       router.push(`/${params.storeId}/categories`);
       toast.success('Category deleted');
     } catch (error) {
-      toast.error('Make sure you removed all categories using this billboard first');
+      toast.error('Make sure you removed all products using this category first');
     } finally {
       setLoading(false);
       setOpen(false);

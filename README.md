@@ -24,4 +24,5 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## TODO
 
-> - [ ] make user unable to update store if store name remains unchaged
+- [x] make user unable to update store if store name remains unchaged
+- [x] Add Hubtel's payment API for transactions on the app
