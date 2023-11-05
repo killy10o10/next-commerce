@@ -39,6 +39,7 @@ const CategoryCellAction: React.FC<CellActionProps> = ({ data }) => {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
       toast.success('Category deleted');
+      router.refresh();
     } catch (error) {
       toast.error('Make sure you removed all categories using this billboard first');
     } finally {

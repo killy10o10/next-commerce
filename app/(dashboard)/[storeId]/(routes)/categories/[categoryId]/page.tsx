@@ -1,6 +1,5 @@
 import prismadb from '@/lib/prismadb';
-
-import CategoryForm from '@/components/CategoryForm';
+import CategoryForm from './components/CategoryForm';
 
 const NewCategory = async ({
   params,

@@ -6,11 +6,8 @@ import Heading from '@/components/Heading';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { DataTable } from '@/components/ui/data-table';
-import {
-  CategoryColumn,
-  columns,
-} from '@/app/(dashboard)/[storeId]/(routes)/categories/components/CategoryColumns';
-import ApiList from '../../../../../../components/ui/api-list';
+import { CategoryColumn, columns } from './CategoryColumns';
+import ApiList from '@/components/ui/api-list';
 
 interface CategoryClientProps {
   data: CategoryColumn[];

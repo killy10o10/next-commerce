@@ -16,7 +16,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { BillboardColumn } from '../components/BillboardColums';
 import AlertModal from '@/components/modals/alert-modal';
-import { CategoryColumn } from '@/app/(dashboard)/[storeId]/(routes)/categories/components/CategoryColumns';
 
 interface CellActionProps {
   data: BillboardColumn;
@@ -39,6 +38,7 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
       toast.success('Billboard deleted');
+      router.refresh();
     } catch (error) {
       toast.error('Make sure you removed all categories using this billboard first');
     } finally {
