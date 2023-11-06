@@ -1,7 +1,7 @@
 import prismadb from '@/lib/prismadb';
 import SizeForm from './components/size-form';
 
-const NewBillboard = async ({ params }: { params: { sizeId: string } }) => {
+const NewSize = async ({ params }: { params: { sizeId: string } }) => {
   const size = await prismadb.size.findUnique({
     where: {
       id: params.sizeId,
@@ -17,4 +17,4 @@ const NewBillboard = async ({ params }: { params: { sizeId: string } }) => {
   );
 };
 
-export default NewBillboard;
+export default NewSize;
