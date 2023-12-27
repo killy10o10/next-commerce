@@ -57,12 +57,7 @@ interface ProductPageProps {
   sizes: Size[];
 }
 
-const ProductForm: React.FC<ProductPageProps> = ({
-  initialData,
-  categories,
-  sizes,
-  colors,
-}) => {
+const ProductForm: React.FC<ProductPageProps> = ({ initialData, categories, sizes, colors }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const params = useParams();
@@ -96,15 +91,12 @@ const ProductForm: React.FC<ProductPageProps> = ({
     try {
       setLoading(true);
       if (initialData) {
-        await axios.patch(
-          `/api/${params.storeId}/billboards/${params.billboardId}`,
-          data
-        );
+        await axios.patch(`/api/${params.storeId}/products/${params.productId}`, data);
       } else {
-        await axios.post(`/api/${params.storeId}/billboards`, data);
+        await axios.post(`/api/${params.storeId}/products`, data);
       }
       router.refresh();
-      router.push(`/${params.storeId}/billboards`);
+      router.push(`/${params.storeId}/products`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error('Something went wrong');
@@ -116,11 +108,11 @@ const ProductForm: React.FC<ProductPageProps> = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
-      router.push(`/${params.storeId}/billboards`);
-      toast.success('Billboard deleted');
+      await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
+      router.push(`/${params.storeId}/products`);
+      toast.success('Product deleted');
     } catch (error) {
-      toast.error('Make sure you removed all categories using this billboard first');
+      toast.error('Something went wrong.');
     } finally {
       setLoading(false);
       setOpen(false);
@@ -136,10 +128,7 @@ const ProductForm: React.FC<ProductPageProps> = ({
         loading={loading}
       />
       <div className='flex items-center justify-between'>
-        <Heading
-          title={title}
-          description={description}
-        />
+        <Heading title={title} description={description} />
         {initialData && (
           <Button
             disabled={loading}
@@ -154,9 +143,7 @@ const ProductForm: React.FC<ProductPageProps> = ({
       </div>
       <Separator />
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className='space-y-8 w-full'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8 w-full'>
           <FormField
             control={form.control}
             name='images'
@@ -169,9 +156,7 @@ const ProductForm: React.FC<ProductPageProps> = ({
                     disabled={loading}
                     onChange={(url) => field.onChange([...field.value, { url }])}
                     onRemove={(url) =>
-                      field.onChange([
-                        ...field.value.filter((current) => current.url !== url),
-                      ])
+                      field.onChange([...field.value.filter((current) => current.url !== url)])
                     }
                   />
                 </FormControl>
@@ -186,11 +171,7 @@ const ProductForm: React.FC<ProductPageProps> = ({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder='Product name'
-                      {...field}
-                    />
+                    <Input disabled={loading} placeholder='Product name' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -203,12 +184,7 @@ const ProductForm: React.FC<ProductPageProps> = ({
                 <FormItem>
                   <FormLabel>Price</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={loading}
-                      type='number'
-                      placeholder='9.99'
-                      {...field}
-                    />
+                    <Input disabled={loading} type='number' placeholder='9.99' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -227,17 +203,12 @@ const ProductForm: React.FC<ProductPageProps> = ({
                     defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder='Select a category'
-                        />
+                        <SelectValue defaultValue={field.value} placeholder='Select a category' />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {categories.map((category) => (
-                        <SelectItem
-                          value={category.id}
-                          key={category.id}>
+                        <SelectItem value={category.id} key={category.id}>
                           {category.name}
                         </SelectItem>
                       ))}
@@ -260,17 +231,12 @@ const ProductForm: React.FC<ProductPageProps> = ({
                     defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder='Select a size'
-                        />
+                        <SelectValue defaultValue={field.value} placeholder='Select a size' />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {sizes.map((size) => (
-                        <SelectItem
-                          value={size.id}
-                          key={size.id}>
+                        <SelectItem value={size.id} key={size.id}>
                           {size.name}
                         </SelectItem>
                       ))}
@@ -293,17 +259,12 @@ const ProductForm: React.FC<ProductPageProps> = ({
                     defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder='Select a color'
-                        />
+                        <SelectValue defaultValue={field.value} placeholder='Select a color' />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {colors.map((color) => (
-                        <SelectItem
-                          value={color.id}
-                          key={color.id}>
+                        <SelectItem value={color.id} key={color.id}>
                           {color.name}
                         </SelectItem>
                       ))}
@@ -319,16 +280,12 @@ const ProductForm: React.FC<ProductPageProps> = ({
               render={({ field }) => (
                 <FormItem className='flex items-start space-x-3 space-y-0 rounded-md border p-4'>
                   <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
                   <div className='space-y-1 leading-none'>
                     <FormLabel>Featured</FormLabel>
                     <FormDescription>
-                      This product will appear on the home page if featured is
-                      checked
+                      This product will appear on the home page if featured is checked
                     </FormDescription>
                   </div>
                 </FormItem>
@@ -340,10 +297,7 @@ const ProductForm: React.FC<ProductPageProps> = ({
               render={({ field }) => (
                 <FormItem className='flex items-start space-x-3 space-y-0 rounded-md border p-4'>
                   <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
                   <div className='space-y-1 leading-none'>
                     <FormLabel>Archived</FormLabel>
@@ -355,10 +309,7 @@ const ProductForm: React.FC<ProductPageProps> = ({
               )}
             />
           </div>
-          <Button
-            disabled={loading}
-            className='ml-auto'
-            type='submit'>
+          <Button disabled={loading} className='ml-auto' type='submit'>
             {action}
           </Button>
         </form>
